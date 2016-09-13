@@ -140,7 +140,10 @@ var Engine = (function(global) {
     }
 
     /* This function is called by the render function and is called on each game
-     * tick. Its purpose is to  then call the render functions you have defined
+     * tick. Its purpose is to
+    // a helper we've provided to easily load images
+    this.sprite = 'images/enemy-bug.png';
+then call the render functions you have defined
      * on your enemy and player entities within app.js
      */
     function renderEntities() {

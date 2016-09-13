@@ -7,6 +7,15 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
+      //Randomize Starting locations for enemy bugs.
+    this.x = Math.random()*200*-1-50;
+
+    var EnemyOrigins = [70, 150,230];
+
+    //Randomize Starting locations for enemy bugs.
+    this.y = EnemyOrigins[Math.floor(Math.random()*3)];
+    this.speed = 80;
+
 };
 
 // Update the enemy's position, required method for game
@@ -15,7 +24,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-
+  this.x += this.speed * dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -28,26 +37,41 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 
-var player = function(){
+var Player = function(){
 
   this.x=200;
   this.y=400;
   this.sprite = "images/char-princess-girl.png";
 };
 
-player.prototype.update = function(){};
+Player.prototype.update = function(){};
 
-player.prototype.render = function(){
+
+
+Player.prototype.render = function(){
 
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
 };
-player.prototype.handleInput = function(){};
+
+
+Player.prototype.handleInput = function(){};
+
+
+
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
-var player = new player();
+
+var player = new Player();
+
+// Push new enemy into allEnemies every 3 seconds
+setInterval(function() {
+        allEnemies.push(new Enemy());
+    },
+    3000);
+
 var checkCollisions = function(){};
 // Place the player object in a variable called player
 
