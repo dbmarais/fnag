@@ -14,7 +14,7 @@ var Enemy = function() {
 
     //Randomize Starting locations for enemy bugs.
     this.y = EnemyOrigins[Math.floor(Math.random()*3)];
-    this.xMultiplyer = 80;
+    this.tileWidth= 85;
 
 };
 
@@ -24,7 +24,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-  this.x += this.xMultiplyer * dt;
+  this.x += this.tileWidth * dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -42,8 +42,8 @@ var Player = function(){
   this.x=200;
   this.y=400;
 
-  this.futureX=0;
-  this.futureY=0;
+  this.directionX=0;
+  this.directionY=0;
   this.tileWidth = 100;
   this.tileHeight = 85;
 
@@ -59,27 +59,23 @@ var Player = function(){
 //To update the Player Object called from engine
 Player.prototype.update = function(){
 
-  var changeX = this.x + this.futureX ;
-  this.x += this.futureX*this.tileWidth;
-/*  if ((changeX < 450 && this.futureX === 1) ||
-      (changeX > -50 && this.futureX === -1)) {
-      this.x += this.futureX * 100;
-  }
-  var changeY = this.x + this.futureY * 85;
+  //Future coordinates defined to check if they will be out of bounds
+  var futureX = this.x + this.directionX*this.tileWidth;
+  var futureY = this.y +this.directionY*this.tileHeight;
 
-  if ((changeX < 450 && this.futureX === 1) ||
-      (changeX > -50 && this.futureX === -1)) {
-      this.x += this.futureX * 100;
-  }*/
-this.y += this.futureY *this.tileHeight;
-this.futureX = 0;
-this.futureY = 0;
+  if (futureX < 500 && futureX > -50){this.x = futureX;}
+  if (futureY > 0 && futureY < 450){this.y = futureY;}
+
+
+//The direction is reset on Player object
+this.directionX = 0;
+this.directionY = 0;
 
 
 };
 
 
-//};
+
 
 
 
@@ -95,23 +91,22 @@ Player.prototype.handleInput = function(keyInput){
   console.log(keyInput);
 
   if (keyInput==="up"){
-    this.futureY = -1;
-    this.futureX = 0;
+    this.directionY = -1;
+    this.directionX = 0;
   }
     else if (keyInput==="down"){
-      this.futureY = 1;
-      this.futureX = 0;
+      this.directionY = 1;
+      this.directionX = 0;
     }
     else if (keyInput ==="right"){
-      this.futureX = 1;
-      this.futureY = 0;
+      this.directionX = 1;
+      this.directionY = 0;
     }
     else if(keyInput ==="left"){
-      this.futureX =-1;
-      this.futureY = 0;
+      this.directionX =-1;
+      this.directionY = 0;
     }
-  console.log(this.x, this.futureX);
-  console.log(this.y,this.futureY);
+
 };
 
 
@@ -129,7 +124,16 @@ setInterval(function() {
     },
     3000);
 
-var checkCollisions = function(){};
+
+
+var checkCollisions = function(){
+  allEnemies.forEach(function(enemy){if (Math.abs(player.x - enemy.x) < 50 &&
+Math.abs(player.y - enemy.y) < 50  ){
+  player.x = 200;
+  player.y = 400;
+}
+});
+};
 // Place the player object in a variable called player
 
 
