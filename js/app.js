@@ -7,14 +7,22 @@ var Enemy = function() {
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
 
-      //Randomize Starting locations for enemy bugs.
-    this.x = Math.random()*200*-1-50;
+      //Randomize Starting locations for the enmies.
+
+      //X-Coordinates:Enemies are generated offscreen to create smooth waklk
+      //onto the screen effect. .
+    this.x = Math.random()*-200;
+
+
 
     var EnemyOrigins = [70, 150,230];
 
-    //Randomize Starting locations for enemy bugs.
+
     this.y = EnemyOrigins[Math.floor(Math.random()*3)];
-    this.tileWidth= 85;
+    //tileWidth is used by the update function to generate bugs
+    // with apparant different speeds.
+
+    this.tileWidth= 80 + Math.floor(Math.random()*200);
 
 };
 
@@ -64,7 +72,12 @@ Player.prototype.update = function(){
   var futureY = this.y +this.directionY*this.tileHeight;
 
   if (futureX < 500 && futureX > -50){this.x = futureX;}
-  if (futureY > 0 && futureY < 450){this.y = futureY;}
+  if (futureY < 450){this.y = futureY;}
+
+  if (player.y < 50){alert("The game has concluded. Thank you for playing.");
+  player.x = 200;
+  player.y = 400;}
+
 
 
 //The direction is reset on Player object
@@ -86,9 +99,9 @@ Player.prototype.render = function(){
 };
 
 
+//This handles changes in the binary player.directionY and player.directionX
+//switching the variables to 1 in the appropriate direction of travel.
 Player.prototype.handleInput = function(keyInput){
-
-  console.log(keyInput);
 
   if (keyInput==="up"){
     this.directionY = -1;
@@ -116,6 +129,7 @@ Player.prototype.handleInput = function(keyInput){
 // Place all enemy objects in an array called allEnemies
 var allEnemies = [];
 
+//Create new Player character
 var player = new Player();
 
 // Push new enemy into allEnemies every 3 seconds
@@ -131,8 +145,19 @@ var checkCollisions = function(){
 Math.abs(player.y - enemy.y) < 50  ){
   player.x = 200;
   player.y = 400;
+
 }
+if (player.y < 50){alert("The game has concluded. Thank you for playing.");
+player.x = 200;
+player.y = 400;}
+
+
 });
+
+
+
+
+
 };
 // Place the player object in a variable called player
 
