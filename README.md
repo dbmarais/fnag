@@ -4,7 +4,7 @@
 
 ## Summary:
 
-The frontend-nanodegree-arcade-game or **fnag** is a simple Browser playable version of the classic "Frogger" game writted in Javascript. The goal is to reach the water whilst avoiding enemy bugs traversing the screen.
+The frontend-nanodegree-arcade-game or **fnag** is a simple Browser playable version of the classic "Frogger" game writted in Javascript. The goal is to reach the water whilst avoiding enemy bugs traversing the screen. Upon reaching the water the player is rewarded with the display of an ascetic alert screen which also resets the game.
 
 ## Requirements:
 
@@ -25,4 +25,4 @@ To control the character, use:
 
 The game is concluded when:
 
-* The player reaches the water. (Top of the screen)
+* The player reaches the water. (Top of the screen).
